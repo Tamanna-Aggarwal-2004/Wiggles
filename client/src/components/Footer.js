@@ -82,7 +82,7 @@ export default function Footer() {
           <div className="footerSocialLinksContainer">
             <a
               className="footerSocialLinks"
-              href="https://github.com/DevanshSahni/Wiggles"
+              href="https://github.com/HarshVashishtha19/Wiggles"
             >
               <AiFillGithub />
             </a>
