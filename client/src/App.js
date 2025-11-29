@@ -17,7 +17,7 @@ const Login = lazy(() => import("./pages/Login"));
 const OTP = lazy(() => import("./pages/OTP"));
 const ChangePassword = lazy(() => import("./pages/ChangePassword"));
 const Contact = lazy(() => import("./pages/Contact"));
-const AboutCreators = lazy(() => import("./pages/AboutCreators"));
+
 const UserVaccination = lazy(() => import("./components/UserVaccination"));
 
 const Profile = lazy(() => import("./pages/Profile"));
