@@ -103,7 +103,6 @@ export default function Explore() {
           message="See more on Wiggles!!"
         />
       )}
-      <UserPosts />
       <div></div>
     </>
   );

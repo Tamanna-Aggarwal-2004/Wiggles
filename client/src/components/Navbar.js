@@ -17,6 +17,9 @@ import { getData, postData } from "../utils/api";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "./Button";
 import { loginUser } from "../features/isLoggedInSlice";
+import { MessageCircle } from "lucide-react";
+
+
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -127,6 +130,11 @@ const Navbar = () => {
             <SlGlobe className="reactIcon" id="explore" />
             &nbsp;Explore
           </Link>
+          <Link to="/posts" onClick={closeMenu}>
+            <MessageCircle className="reactIcon" />
+            &nbsp;Posts
+          </Link>
+
           <Link to="/vaccination" onClick={closeMenu}>
             <TbVaccine className="reactIcon" />
             &nbsp;Vaccination
@@ -143,18 +151,12 @@ const Navbar = () => {
             <HiOutlineMail className="reactIcon" />
             &nbsp;Contact
           </Link>
-         {loggedIn && (
-  <Link
-    className="navbarLinksContact"
-    onClick={logout}
-  >
-    <TbLogout />
-    &nbsp;Logout
-  </Link>
-)}
-
-
-          
+          {loggedIn && (
+            <Link className="navbarLinksContact" onClick={logout}>
+              <TbLogout />
+              &nbsp;Logout
+            </Link>
+          )}
         </div>
       </div>
       <div className="navbarWiggles">
@@ -166,12 +168,12 @@ const Navbar = () => {
             <NavbarSkeleton />
           ) : (
             <div className="navbarSecondaryInfo">
-             {loggedIn && (
-  <Link className="navbar_logout" onClick={logout}>
-    <TbLogout />
-    &nbsp;Logout
-  </Link>
-)}
+              {loggedIn && (
+                <Link className="navbar_logout" onClick={logout}>
+                  <TbLogout />
+                  &nbsp;Logout
+                </Link>
+              )}
 
               <div className="navbarNotificationSection">
                 <IoIosNotifications

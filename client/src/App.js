@@ -12,6 +12,7 @@ import Signup from "./pages/Signup";
 import Loader from "./components/Loader";
 import CommunityGuidelines from "./pages/CommunityGuidelines";
 import ViolationWrapper from "./utils/ViolationWrapper";
+import UserPosts from "./components/UserPosts";
 
 const Login = lazy(() => import("./pages/Login"));
 const OTP = lazy(() => import("./pages/OTP"));
@@ -124,6 +125,16 @@ function App() {
             <ProtectedRoute>
               <Suspense fallback={<Loader />}>
                 <Profile />
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/posts"
+          element={
+            <ProtectedRoute>
+              <Suspense fallback={<Loader />}>
+                <UserPosts/>
               </Suspense>
             </ProtectedRoute>
           }

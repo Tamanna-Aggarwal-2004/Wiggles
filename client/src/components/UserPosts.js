@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 const API_BASE_URL = process.env.REACT_APP_BASE_URL;
 
-const SocialFeed = () => {
+const UserPosts = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [commentText, setCommentText] = useState({});
@@ -199,10 +199,9 @@ const SocialFeed = () => {
   }
 
   return (
-    <div className="social-feed-container">
-      <div className="feed-content">
-        <h1 className="feed-title">Social Feed</h1>
-        
+    <div className="social-feed-container" >
+      <div className="feed-content" style={{marginTop: "80px"}}>
+       
         {posts.length === 0 ? (
           <div className="empty-state">
             No posts yet. Be the first to post!
@@ -385,4 +384,4 @@ const SocialFeed = () => {
   );
 };
 
-export default SocialFeed;
+export default UserPosts;
