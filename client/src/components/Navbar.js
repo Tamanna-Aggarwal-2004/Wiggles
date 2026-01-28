@@ -131,7 +131,7 @@ const Navbar = () => {
             &nbsp;Explore
           </Link>
           <Link to="/posts" onClick={closeMenu}>
-            <MessageCircle className="reactIcon" id="explore" />
+            <MessageCircle className="reactIcon" />
             &nbsp;Posts
           </Link>
 
