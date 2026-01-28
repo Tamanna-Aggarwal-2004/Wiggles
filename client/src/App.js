@@ -132,11 +132,9 @@ function App() {
         <Route
           path="/posts"
           element={
-            <ProtectedRoute>
               <Suspense fallback={<Loader />}>
                 <UserPosts/>
               </Suspense>
-            </ProtectedRoute>
           }
         />
         <Route
