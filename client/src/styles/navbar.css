@@ -234,6 +234,9 @@
 
 
 @media(max-width:500px){
+  .navbar_logout{
+    display: none;
+  }
   .navbarSecondaryInfo.btn{
     font-size: 16px;
   }
@@ -251,5 +254,30 @@
   .navbarNotificationSection{
     position: relative;
   }
-  
 }
+
+@media(max-width:720px){
+  .navbar .navbar_logout {
+    display: none !important;
+  }
+}
+.navbar_logout{
+  display: flex !important;
+  align-items: center;
+  gap: 6px;
+
+  background: #463939;
+  color: #fff;
+
+  padding: 8px 14px;
+  border-radius: 10px; /* pill shape */
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+
+                

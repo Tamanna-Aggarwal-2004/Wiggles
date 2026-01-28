@@ -2,6 +2,12 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const UserModel = require("../models/Users");
 
+// =====================================================
+// 🚀 MIDDLEWARE 1: userVerification
+// - Ye middleware CHECK karega ki user logged-in hai ya nahi.
+// - Token COOKIE se read hota hai.
+// - Agar token valid hai → req.user me USERID daal deta hai.
+// =====================================================
 module.exports.userVerification = async (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {
@@ -13,6 +19,8 @@ module.exports.userVerification = async (req, res, next) => {
     const user = await UserModel.findOne({ _id: decodedToken.id });
 
     if (user) {
+      //SUCCESS → req.user me token ka data store kar denge
+      // Ab req.user.id se actual userID mil jayega
       req.user = decodedToken; // Attach user object to the request for further use
       if (req.path !== "/") {
         next(); // User authorized, proceed to the next middleware or route handler
@@ -25,6 +33,11 @@ module.exports.userVerification = async (req, res, next) => {
   }
 };
 
+// =====================================================
+// 🚀 MIDDLEWARE 2: temp
+// - Optional user detection (login hai to user attach ho jayega)
+// - Agar login nahi hai to bhi request aage jati rahegi
+// =====================================================
 module.exports.temp = async (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {

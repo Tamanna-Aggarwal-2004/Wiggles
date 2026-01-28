@@ -49,7 +49,7 @@ const Navbar = () => {
       } catch (err) {
         toast.error(
           err.message === "Request failed with status code 401" &&
-            "Please login first!"
+            "Please login first!",
         );
       }
     };
@@ -143,14 +143,18 @@ const Navbar = () => {
             <HiOutlineMail className="reactIcon" />
             &nbsp;Contact
           </Link>
-          <Link
-            className="navbarLinksContact"
-            style={loggedIn ? { display: "initial" } : { display: "none" }}
-            onClick={logout}
-          >
-            <TbLogout />
-            &nbsp;Logout
-          </Link>
+         {loggedIn && (
+  <Link
+    className="navbarLinksContact"
+    onClick={logout}
+  >
+    <TbLogout />
+    &nbsp;Logout
+  </Link>
+)}
+
+
+          
         </div>
       </div>
       <div className="navbarWiggles">
@@ -162,6 +166,13 @@ const Navbar = () => {
             <NavbarSkeleton />
           ) : (
             <div className="navbarSecondaryInfo">
+             {loggedIn && (
+  <Link className="navbar_logout" onClick={logout}>
+    <TbLogout />
+    &nbsp;Logout
+  </Link>
+)}
+
               <div className="navbarNotificationSection">
                 <IoIosNotifications
                   className={`notificationIcon ${

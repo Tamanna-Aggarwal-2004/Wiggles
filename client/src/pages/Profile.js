@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineSetting } from "react-icons/ai";
-import "../styles/login.css";
 import "../styles/profile.css";
 import EditProfile from "../components/EditProfile";
 import { PiDogFill } from "react-icons/pi";
@@ -8,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getData } from "../utils/api";
 import { calculateAge } from "../utils/common";
+import CreatePostPopup from "../components/CreatePostPopup";
+import MyPostsGrid from "../components/MyPostsGrid";
 
 const Profile = () => {
   const [name, setName] = useState("");
@@ -20,7 +21,12 @@ const Profile = () => {
   const [address, setAddress] = useState("");
   const [openEditProfile, setOpenEditProfile] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const [stats, setStats] = useState({
+    userPosts: 0,
+    friends: 0
+  });
   const navigate = useNavigate();
+  const [openCreatePost, setOpenCreatePost] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,20 +39,26 @@ const Profile = () => {
           return;
         }
         if (data.status === "ok") {
-          setName(data.foundUser.name);
-          setBreed(data.foundUser.breed);
-          setGender(data.foundUser.gender);
-          if (data.foundUser.image === "null") {
+          const user = data.foundUser;
+          setName(user.name);
+          setBreed(user.breed);
+          setGender(user.gender);
+          if (user.image === "null") {
             setImage(null);
           } else {
-            setImage(data.foundUser.image);
+            setImage(user.image);
           }
-          setBio(data.foundUser.bio);
-          setAddress(data.foundUser.address);
-          const { ageInYears, ageInMonths, ageInDays } = calculateAge(
-            data.foundUser.dob
-          );
-          setDob(data.foundUser.dob.slice(0, 10));
+          setBio(user.bio);
+          setAddress(user.address);
+          
+          // Set real stats from backend
+          setStats({
+            userPosts: user.posts?.length || user.postCount || 0,
+            friends: user.friends?.length || user.followerCount || 0,
+          });
+
+          const { ageInYears, ageInMonths, ageInDays } = calculateAge(user.dob);
+          setDob(user.dob.slice(0, 10));
           if (ageInYears >= 1) {
             setAge(ageInYears + " years");
           } else if (ageInMonths >= 1) {
@@ -60,57 +72,110 @@ const Profile = () => {
       }
     };
     fetchData();
-  }, [refresh]);
+  }, [refresh, navigate]);
+
   return (
     <>
-      <>
-        <div className="profile">
-          <div className="userProfilePicture">
+      <div className="modern-profile-container">
+        <div className="profile-header">
+          {/* Profile Picture */}
+          <div className="profile-picture-wrapper">
             {image ? (
               <img
-                className="profilePicture"
+                className="profile-picture"
                 src={image}
                 alt="Profile"
                 loading="lazy"
               />
             ) : (
-              <PiDogFill className="profileIcon" />
+              <div className="profile-picture-placeholder">
+                <PiDogFill className="profile-placeholder-icon" />
+              </div>
             )}
           </div>
-          <div className="profileInfoPrimary">
-            <h1>Name : {name}</h1>
-            <h1>Bio : {bio}</h1>
-            <h1>Breed : {breed}</h1>
-            <h1>Gender : {gender}</h1>
-            <h1>Age : {age}</h1>
-            <h1>Address : {address} </h1>
 
-            <h1
-              className="profileInfoEdit"
-              onClick={() => {
-                setOpenEditProfile(true);
-                document.querySelector(".profile").style.blur = "30px";
-              }}
+          {/* Profile Info */}
+          <div className="profile-info-section">
+            {/* Top Section: Name & Edit Button */}
+            <div className="profile-top-row">
+              <h1 className="profile-name">{name}</h1>
+              <button
+                className="edit-profile-btn"
+                onClick={() => setOpenEditProfile(true)}
+              >
+                <AiOutlineSetting size={20} />
+                Edit Profile
+              </button>
+            </div>
+
+            {/* Stats Row */}
+            <div className="profile-stats">
+              <div className="stat-item">
+                <span className="stat-number">{stats.userPosts}</span>
+                <span className="stat-label">posts</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number">{stats.friends}</span>
+                <span className="stat-label">friends</span>
+              </div>
+              
+            </div>
+
+            {/* Bio & Details */}
+            <div className="profile-details">
+              <p className="profile-bio-text">{bio || "No bio yet"}</p>
+              <div className="profile-info-grid">
+                <div className="info-item">
+                  <span className="info-label">Breed:</span>
+                  <span className="info-value">{breed}</span>
+                </div>
+                <div className="info-item">
+                  <span className="info-label">Gender:</span>
+                  <span className="info-value">{gender}</span>
+                </div>
+                <div className="info-item">
+                  <span className="info-label">Age:</span>
+                  <span className="info-value">{age}</span>
+                </div>
+                <div className="info-item">
+                  <span className="info-label">Location:</span>
+                  <span className="info-value">{address}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Create Post Button */}
+            <button
+              className="create-post-btn"
+              onClick={() => setOpenCreatePost(true)}
             >
-              <AiOutlineSetting /> &nbsp;Edit Profile
-            </h1>
+              + Create Post
+            </button>
           </div>
         </div>
-        {openEditProfile && (
-          <EditProfile
-            closeEditProfile={setOpenEditProfile}
-            name={name}
-            bio={bio}
-            breed={breed}
-            dob={dob}
-            gender={gender}
-            address={address}
-            editImage={image}
-            refresh={refresh}
-            setRefresh={setRefresh}
-          />
-        )}
-      </>
+      </div>
+
+      {/* Modals */}
+      {openEditProfile && (
+        <EditProfile
+          closeEditProfile={setOpenEditProfile}
+          name={name}
+          bio={bio}
+          breed={breed}
+          dob={dob}
+          gender={gender}
+          address={address}
+          editImage={image}
+          refresh={refresh}
+          setRefresh={setRefresh}
+        />
+      )}
+      {openCreatePost && (
+        <CreatePostPopup close={() => setOpenCreatePost(false)} />
+      )}
+
+      {/* Posts Grid */}
+      <MyPostsGrid />
     </>
   );
 };

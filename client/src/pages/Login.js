@@ -71,6 +71,7 @@ const LandingPage = () => {
       toast.error(err.message);
     }
   };
+  
 
   return (
     <div className="login">

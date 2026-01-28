@@ -118,3 +118,31 @@
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   }
 }
+
+/* MAIN LAYOUT
+.explore-layout {
+  display: flex;
+  gap: 24px;
+  padding: 20px 40px;
+  max-width: 1400px;
+  margin: auto;
+} */
+
+/* LEFT POSTS */
+/* .explore-posts {
+  flex: 2.2;
+} */
+
+/* MOBILE */
+/* @media (max-width: 900px) {
+  .explore-layout {
+    flex-direction: column;
+    padding: 12px;
+  }
+
+  .explore-suggestions {
+    position: static;
+    margin-top: 20px;
+  }
+} */
+

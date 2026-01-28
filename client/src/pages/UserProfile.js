@@ -8,6 +8,7 @@ import { calculateAge } from "../utils/common";
 import { getData, postData } from "../utils/api";
 import { useSelector } from "react-redux";
 import Login from "../components/LoginPopUpComponent";
+import UsersPostGrid from "../components/UserPostGrid";
 
 const UserProfile = () => {
   const { id } = useParams();
@@ -188,6 +189,7 @@ const UserProfile = () => {
           message="See more on Wiggles!!"
         />
       )}
+      <UsersPostGrid/>
     </>
   );
 };

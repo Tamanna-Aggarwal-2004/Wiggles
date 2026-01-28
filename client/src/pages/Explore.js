@@ -8,7 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { getData } from "../utils/api";
 import { useSelector } from "react-redux";
 import Login from "../components/LoginPopUpComponent";
-// import SearchBar from "../components/SearchBar";
+import UserPosts from "../components/UserPosts";
+//import SearchBar from "../components/SearchBar";
 
 export default function Explore() {
   const navigate = useNavigate();
@@ -36,11 +37,15 @@ export default function Explore() {
         if (data.status === "ok") {
           setUserID(data.userID);
           setUsers(
-            data.Users.filter(
-              (user) =>
-                user._id !== data.userID && !user.friends.includes(data.userID)
-            )
+            data.Users.filter((user) => {
+              if (!user || !user._id) return false;
+
+              const friends = Array.isArray(user.friends) ? user.friends : [];
+
+              return user._id !== data.userID && !friends.includes(data.userID);
+            })
           );
+
           setLoading(false);
         } else {
           toast.error("Unauthorised access");
@@ -50,7 +55,7 @@ export default function Explore() {
       }
     };
     handleResponse();
-  }, [loggedIn]);
+  }, [loggedIn, navigate]);
 
   const skeletonCards = Array.from({ length: 9 }).map((index) => (
     <ExploreCardSkeleton key={index} />
@@ -62,26 +67,34 @@ export default function Explore() {
       <div id="profileCardContainer">
         {loading
           ? skeletonCards
-          : users.map((user) => (
-              <ExploreProfileCard
-                key={user._id}
-                id={user._id}
-                name={user.name}
-                breed={user.breed}
-                gender={user.gender}
-                bio={user.bio}
-                image={user.image}
-                status={
-                  !loggedIn
-                    ? "Connect +"
-                    : user.requestRecieved.includes(userID)
-                    ? "Pending..."
-                    : "Connect +"
+          : users
+              .filter((user) => {
+                if (!user || !user._id) {
+                  console.warn("❗ Skipping invalid user:", user);
+                  return false;
                 }
-                // openPopup={openPopup}
-                setOpenPopup={setOpenPopup}
-              />
-            ))}
+                return true;
+              })
+              .map((user) => (
+                <ExploreProfileCard
+                  key={user._id}
+                  id={user._id}
+                  name={user.name}
+                  breed={user.breed}
+                  gender={user.gender}
+                  bio={user.bio}
+                  image={user.image}
+                  status={
+                    !loggedIn
+                      ? "Connect +"
+                      : user.requestRecieved.includes(userID)
+                      ? "Pending..."
+                      : "Connect +"
+                  }
+                  // openPopup={openPopup}
+                  setOpenPopup={setOpenPopup}
+                />
+              ))}
       </div>
       {openPopup && (
         <Login
@@ -90,6 +103,8 @@ export default function Explore() {
           message="See more on Wiggles!!"
         />
       )}
+      <UserPosts />
+      <div></div>
     </>
   );
 }

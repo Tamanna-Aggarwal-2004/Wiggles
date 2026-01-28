@@ -1,0 +1,143 @@
+/* Overlay */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+}
+
+/* Beautiful Glass Card */
+.popup-card {
+  width: 400px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.18);
+  animation: smoothPop 0.25s ease-out;
+}
+
+@keyframes smoothPop {
+  from {
+    transform: translateY(20px) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.popup-title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 18px;
+  color: #2e2e2e;
+}
+
+/* Preview Box */
+.preview-box {
+  width: 100%;
+  height: 240px;
+  background: linear-gradient(145deg, #f3f3f3, #e7e7e7);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.preview-placeholder {
+  color: #777;
+  font-size: 15px;
+}
+
+/* Upload Button */
+.upload-btn {
+  margin: 12px auto;
+  display: block;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 10px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff914d, #ff630f);
+  color: #fff;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.upload-btn:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #ff7b2d, #e45505);
+}
+
+/* Caption Input */
+.caption-input {
+  width: 95%;
+  height: 90px;
+  margin-top: 10px;
+  border-radius: 14px;
+  padding: 12px;
+  font-size: 14px;
+  outline: none;
+  resize: none;
+  border: 1px solid #e2e2e2;
+
+  /* remove black border on focus */
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.caption-input:focus {
+  border: 1.5px solid #ff914d;
+  box-shadow: 0 0 6px rgba(255, 145, 77, 0.35);
+}
+
+/* Action Buttons */
+.popup-actions {
+  margin-top: 18px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.create-btn,
+.cancel-btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #fff;
+  border: none;
+  transition: all 0.2s;
+}
+
+/* Upload button */
+.create-btn {
+  background: linear-gradient(135deg, #ff7b2d, #ff5a00);
+}
+
+.create-btn:hover {
+  background: linear-gradient(135deg, #ff630d, #e04e00);
+  transform: translateY(-1px);
+}
+
+/* Cancel */
+.cancel-btn {
+  background: #e63946;
+}
+
+.cancel-btn:hover {
+  background: #c71d2d;
+  transform: translateY(-1px);
+}

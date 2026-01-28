@@ -43,6 +43,9 @@ const ProfileSchema = new mongoose.Schema(
     vetAddress: { type: String },
     vaccinations: [{ type: VaccinationSchema }],
     violations: { type: ViolationSchema },
+
+    //NEW
+    posts: [{ type: mongoose.Schema.ObjectId, ref: "post" }],
   },
   { timestamps: true }
 );

@@ -21,6 +21,6 @@ mongoose.connect(`mongodb+srv://${process.env.DB_CONNECTION_STRING}`);
 
 app.use("/", routes);
 
-app.listen(3001, () => {
-  console.log("Server started on PORT 3001");
+app.listen(3002, () => {
+  console.log("Server started on PORT 3002");
 });
